@@ -1,23 +1,3 @@
-"""Variables de Clase y Métodos de Clase."""
-
-"""Todos los artículos tienen un nombre y un costo, opcionalmente algunos
-    tienen un porcentaje de descuento.
-
-    El IVA es un impuesto que se aplica a todos los productos por igual,
-    actualmente es de 21% pero puede cambiar en el futuro.
-
-    Para calcular el precio de un artículo, hay que sumar el IVA y luego restar
-    los descuentos si hubiera. Redondear a 2 decimales.
-
-    Restricciones:
-        - Utilizar 3 variables de instancia
-        - Utilizar 1 método de instancia
-        - Utilizar 1 variable de clase
-        - Utilizar 1 método de clase
-        - No utilizar Dataclasses
-        - No utilizar Properties
-        - Utilizar Type Hints en todos los métodos y variables
-    """
 class Article():
 
     def __init__(self,nombre,costo,descuento=0):
@@ -80,12 +60,3 @@ assert article.calcular_precio() == 1.21
 article = Article(costo=1, nombre="Auto", descuento=0.21)
 assert article.nombre == "Auto"
 assert article.calcular_precio() == 0.96
-
-
-# Test de método de clase
-Article.actualizar_iva(0.25)
-
-article = Article(costo=1, nombre="Auto")
-assert article.nombre == "Auto"
-assert article.calcular_precio() == 1.25
-# NO MODIFICAR - FIN
