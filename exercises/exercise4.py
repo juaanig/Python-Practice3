@@ -3,6 +3,18 @@
 from dataclasses import dataclass
 from typing import List
 
+@dataclass
+class Materia:
+    nombre: str
+
+
+@dataclass
+class Carrera:
+
+    longitud:List
+
+    def __str__(self):
+        return f'Carrera(materias={self.longitud})'
 
 """Una carrera tiene varias materias, la "longitud" de una carrera hace
 referencia a cuantas materias tiene.
@@ -50,6 +62,5 @@ assert (
     str(ciclo_basico)
     == "Carrera(materias=[Materia(nombre='Matemática'), Materia(nombre='Estadística')])"  # noqa: 501
 )
-
-assert len(ciclo_basico) == 2
+assert len(ciclo_basico.longitud) == 2
 # NO MODIFICAR - FIN

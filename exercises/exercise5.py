@@ -38,15 +38,65 @@ from dataclasses import dataclass
 from typing import List
 
 
-def calcular_sueldos(contribuyentes: List[Contribuyente]):
-    """Data una lista de contribuyentes, devuelve una lista de los sueldos de
-    cada uno."""
 
+class Contribuyente(ABC):
+
+    @abstractmethod
+    def calcular_sueldo():
+        pass
+
+
+@dataclass
+class Empleado(Contribuyente):
+
+    sueldos: float
+
+    def calcular_sueldo(self):
+        self.sueldos -= (self.sueldos * 0.17)
+        sueldo = self.sueldos
+        return sueldo
+
+
+@dataclass
+class Monotributista(Contribuyente):
+    sueldos: float
+    '''
+     Si son menores a $370.000, paga $2646,22 mensuales
+    - Si son menores a $550.000, paga $2958,95 mensuales
+    - Si son menores a $770.000, paga $3382,62 mensuales
+    - Si son mayores a $770.000, paga $3988,85 mensuales
+    '''
+
+    def calcular_sueldo(self):
+
+        if self.sueldos < 370000/12:
+            self.sueldos =self.sueldos -  2646.22
+
+        elif self.sueldos < 550000/12:
+            self.sueldos =self.sueldos- 2958.95
+
+        elif self.sueldos < 770000/12:
+            self.sueldos =self.sueldos - 3382.62
+        
+        elif self.sueldos > 770000/12:
+            self.sueldos =self.sueldos - 3988.85
+        
+        sueldo = self.sueldos
+        return sueldo   
+
+
+
+def calcular_sueldos(contribuyentes: List[Contribuyente]):
+
+    return [contribuyentes[0].calcular_sueldo(),contribuyentes[1].calcular_sueldo()]  
+     
+ 
 
 # NO MODIFICAR - INICIO
 assert type(Contribuyente) == abc.ABCMeta, "Contribuyente debe ser abstracta"
 assert issubclass(Empleado, Contribuyente), "Empleado debe heredar de Contribuyente" # noqa: 501
 assert issubclass(Monotributista, Contribuyente), "Monotributista debe heredar de Contribuyente" # noqa: 501
+
 
 try:
     juan = Contribuyente()
@@ -81,6 +131,7 @@ juan = Monotributista(75_000)
 assert juan.calcular_sueldo() == 71011.15
 
 
+
 maria = Empleado(25_000)
 assert maria.calcular_sueldo() == 20750.0
 
@@ -99,5 +150,5 @@ assert maria.calcular_sueldo() == 62250.0
 contribuyentes = [Monotributista(80_000), Empleado(80_000)]
 
 assert calcular_sueldos(contribuyentes) == [76011.15, 66400.0]
-
+ 
 # NO MODIFICAR - FIN

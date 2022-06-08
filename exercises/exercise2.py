@@ -17,6 +17,22 @@
         - No utilizar Dataclasses
         - No utilizar Properties
         - Utilizar Type Hints en todos los métodos y variables
+
+        __iva = 0.21
+    
+    def __init__(self, nombre, costo, descuento = 0):
+        self.nombre = nombre
+        self.costo = costo
+        self.descuento = descuento
+
+    def calcular_precio(self):
+        self.precio = (self.costo-self.descuento) * (self.__iva + 1)
+        return round(self.precio,2)
+
+    @classmethod
+    def actualizar_iva(cls, nuevoIva):
+        cls.__iva = nuevoIva
+
     """
 class Article():
 
@@ -24,29 +40,24 @@ class Article():
         self.nombre = nombre
         self.costo = costo
         self.descuento = descuento
-    
 
-    def actualizar_iva(self):
-        total = self.costo*0.21
-        return total
+    __iva = 0.21
+    
+    @classmethod
+    def actualizar_iva(cls,arg):
+        cls.__iva = arg
+ 
     
     def calcular_precio(self):
-        iva = self.actualizar_iva()
-        aux = self.costo + iva
-        final = aux - (aux*self.descuento) 
-        return round(final,2)
-
-#========== borrar despues =================
-
-
-#===========================================
-
+        final = round((self.costo -self.descuento)*(1+self.__iva),2)
+        print(final)
+        return final
 
 # NO MODIFICAR - INICIO
 # Test parámetro obligatorio
 try:
     article = Article()
-    assert False, "No se puede instanciar sin nombre ni costo"
+    assert False,"No se puede instanciar sin nombre ni costo"
 except TypeError:
     assert True
 
@@ -80,7 +91,6 @@ assert article.calcular_precio() == 1.21
 article = Article(costo=1, nombre="Auto", descuento=0.21)
 assert article.nombre == "Auto"
 assert article.calcular_precio() == 0.96
-
 
 # Test de método de clase
 Article.actualizar_iva(0.25)

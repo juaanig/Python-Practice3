@@ -1,20 +1,42 @@
-"""Properties"""
-
-
 class Article:
     """Re-Escribir el ejercicio anterior utilizando una property en vez de un
-    método de instancia.
+    método de instancia."""
 
+    def __init__(self,nombre,costo,descuento=0):
+            self.nombre = nombre
+            self.costo = costo
+            self.descuento = descuento
+    
+    
+    #===============================
+    __iva = 0.21
+    
+    @classmethod
+    def actualizar_iva(cls,arg):
+        cls.__iva = arg 
+    #===============================
+    
+    #===============================
+    @property                       #esta seccion se utiliza para retornar el atributo __precio
+    def precio(self):
+        pre = round((self.costo -self.descuento)*(1+self.__iva),2)
+        return pre
+    #===============================
+   
+    """ 
     Restricciones:
-        - Utilizar 3 variables de instancia
-        - Utilizar 1 property
-        - Utilizar 1 variable de clase
-        - Utilizar 1 método de clase
-        - No utilizar métodos de instancia
+        - Utilizar 3 variables de instancia (se instancian en el constructor)
+        - Utilizar 1 property       
+        - Utilizar 1 variable de clase (fuera del constructor)
+        - Utilizar 1 método de clase (metodo de clase)
+        - No utilizar métodos de instancia (metodo que modifica una var del constructor)
         - No utilizar Dataclasses
         - Utilizar Type Hints en todos los métodos y variables
-    """
-
+     
+        article = Article(nombre="Auto", costo=1)
+        print(article.precio)
+        article.precio = 2
+        print(article.precio)""" 
 
 # NO MODIFICAR - INICIO
 # Test parámetro obligatorio
@@ -42,7 +64,7 @@ try:
     assert False, "No se puede modificar el precio"
 except AttributeError:
     assert True
-
+ 
 
 # Test básico
 article = Article("Auto", 1)
